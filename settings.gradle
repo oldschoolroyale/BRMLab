@@ -1,0 +1,2 @@
+rootProject.name='CRM-Project'
+include ':app'

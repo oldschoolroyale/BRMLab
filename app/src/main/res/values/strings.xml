@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">BRMLab</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="synchronize">Синхронизировать</string>
+    <string name="Main">Главная</string>
+    <string name="data_base_doctor">Врачи</string>
+    <string name="advertisment_movies">Рекламные ролики</string>
+    <string name="exit">Выход</string>
+    <string name="verify_text">Пожалуйста введите код страны \n и номер телефона для верефикации</string>
+    <string name="alert_dialog_start_message">Хотите начать визит? \nНе закрывайте приложения во время визита, иначе визит не будет считаться</string>
+    <string name="data_base_pharmacy">Аптеки</string>
+    <string name="verification">Ожидайте верификации...</string>
+    <string name="Input_text">Введите текст</string>
+    <string name="delete_note">Удалить запись?</string>
+    <string name="map_key" translatable="false">AIzaSyDqiVKAGJip9YKtPsPIujsuTtgi6h1qRY0</string>
+    <string name="preparat">Выберите препарат</string>
+    <string name="add_label">Добавить</string>
+    <string name="dismiss_label">Отменить</string>
+    <string name="clear_label">Очистить</string>
+
+
+    <string-array name="categoryOfMission">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+    </string-array>
+
+    <string-array name="statusOfMission">
+        <item>Активный</item>
+        <item>Не активный</item>
+    </string-array>
+
+    <string-array name="test">
+        <item>Item1</item>
+        <item>Item2</item>
+        <item>Item3</item>
+    </string-array>
+</resources>

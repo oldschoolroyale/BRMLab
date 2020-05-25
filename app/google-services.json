@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1039312371949",
+    "firebase_url": "https://crm-project-e1298.firebaseio.com",
+    "project_id": "crm-project-e1298",
+    "storage_bucket": "crm-project-e1298.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039312371949:android:16671c07288f271a78cce4",
+        "android_client_info": {
+          "package_name": "com.example.crm_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1039312371949-4gas3p2cqt6febu3a2155ijc2tpb01s6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.crm_project",
+            "certificate_hash": "2638db09f38456cf32ea0f86ae2c966435d50b83"
+          }
+        },
+        {
+          "client_id": "1039312371949-i1qpkmman8s641anr2v8r5m9h53na9iu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqiVKAGJip9YKtPsPIujsuTtgi6h1qRY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1039312371949-i1qpkmman8s641anr2v8r5m9h53na9iu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

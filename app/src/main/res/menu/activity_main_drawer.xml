@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home_slide_button"
+            android:icon="@drawable/home"
+            android:title="@string/Main"/>
+        <item android:title="Инструменты">
+            <menu>
+                <item
+                    android:id="@+id/advertisement_movies_slide_button"
+                    android:icon="@drawable/play"
+                    android:title="@string/advertisment_movies" />
+            </menu>
+        </item>
+        <item android:title="Дата база">
+            <menu>
+                <item
+                android:id="@+id/data_base_slide_button"
+                android:icon="@drawable/doctor"
+                android:title="@string/data_base_doctor" />
+                <item android:id="@+id/data_base_pharmacy_slide_button"
+                    android:icon="@drawable/pharmacy"
+                    android:title="@string/data_base_pharmacy"/>
+            </menu>
+
+        </item>
+
+
+        <item android:title="Другое">
+            <menu>
+                <item
+                    android:id="@+id/exit_slide_button"
+                    android:icon="@drawable/sign_out"
+                    android:title="@string/exit" />
+            </menu>
+        </item>
+
+
+    </group>
+</menu>
