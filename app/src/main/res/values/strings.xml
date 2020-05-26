@@ -49,4 +49,8 @@
         <item>Item2</item>
         <item>Item3</item>
     </string-array>
+    <string-array name="managerArray">
+        <item>Феруза Пулатова</item>
+        <item>Салих Касимович</item>
+    </string-array>
 </resources>

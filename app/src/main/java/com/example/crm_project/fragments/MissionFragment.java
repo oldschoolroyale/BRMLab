@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.crm_project.DoctorInformation;
 import com.example.crm_project.R;
+import com.example.crm_project.dataBase.DoctorList;
 import com.example.crm_project.fragments.RecyclerViewAdapter.Product;
 import com.example.crm_project.fragments.RecyclerViewAdapter.ProductAdapter;
 import com.example.crm_project.fragments.RecyclerViewAdapter.RecyclerViewClickInterface;
@@ -53,7 +54,7 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
     //final ints
     final int REQUEST_PERMISSION_CODE = 1000;
     //var
-    String timeStamp, current_user, strDate, medications;
+    String timeStamp, current_user, strDate, medications, managerUrl;
     Double lonDBL, latDBL;
     //recycler
     RecyclerView recyclerView;
@@ -65,6 +66,7 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
     TextView dateText;
     LinearLayout linearLayout;
     FusedLocationProviderClient fusedLocationProviderClient;
+    String[]  words;
 
 
     public MissionFragment(){
@@ -79,6 +81,8 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         current_user = user.getUid();
+
+        words = getResources().getStringArray(R.array.managerArray);
 
         linearLayout = view.findViewById(R.id.fragment_mission_ll1);
 
@@ -120,19 +124,13 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.child("check").getValue().toString().equals("true")){
-                    final DialogInterface.OnClickListener dialogVerification = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    checkVerification();
-                            }
-                        }
-                    };
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage(R.string.verification).setPositiveButton("Обновить", dialogVerification).setCancelable(false).show();
+                if (dataSnapshot.child("manager").getValue().toString().equals("null")){
+                    categoryAlert();
                 }
+                else if (!dataSnapshot.child("check").getValue().toString().equals("true")){
+                    verificationAlert();
+                }
+
             }
 
             @Override
@@ -377,6 +375,41 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
 
             }
         });
+    }
+
+    private void categoryAlert(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Выберите администратора");
+        builder.setCancelable(false);
+        builder.setSingleChoiceItems(words, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                managerUrl = words[which];
+                if (managerUrl.equals("Феруза Пулатова")){
+                    reference.child("manager").setValue("hGuQZfTQ3qPbgmrEhcLauYDfLsv2");
+                }
+                if (managerUrl.equals("Салих Касимович")){
+                    reference.child("manager").setValue("R4DcAQ34BSgJ9K8AJ34ncZ0jlo82");
+                }
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void verificationAlert(){
+        final DialogInterface.OnClickListener dialogVerification = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        checkVerification();
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.verification).setPositiveButton("Обновить", dialogVerification).setCancelable(false).show();
     }
 }
 

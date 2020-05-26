@@ -144,7 +144,6 @@ public class DoctorList extends AppCompatActivity implements AdapterView.OnItemC
 
     }
 
-
     private void parseItems(String jsonResponse) {
 
         list = new ArrayList<>();
