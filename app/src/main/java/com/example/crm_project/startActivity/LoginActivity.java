@@ -1,15 +1,19 @@
 package com.example.crm_project.startActivity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.crm_project.MainActivity;
 import com.example.crm_project.R;
@@ -27,7 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.TimeUnit;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity  {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
@@ -55,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         mGenerateBtn = findViewById(R.id.generate_btn);
         mLoginProgress = findViewById(R.id.login_progress_bar);
         mLoginFeedbackText = findViewById(R.id.login_form_feedback);
+
 
         mGenerateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +124,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+
         if(mCurrentUser != null){
             sendUserToHome();
         }
@@ -142,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                             reference.child("town_pharmacy").setValue("null");
                             reference.child("region").setValue("null");
                             reference.child("manager").setValue("null");
+
                             sendUserToHome();
                             // ...
                         } else {
@@ -164,6 +172,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(homeIntent);
         finish();
     }
+
 
 
 }

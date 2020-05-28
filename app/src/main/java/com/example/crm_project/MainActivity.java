@@ -22,6 +22,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.crm_project.addActivities.DoctorAdd;
 import com.example.crm_project.addActivities.PharmacyAdd;
+import com.example.crm_project.startActivity.UpdateHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -43,7 +44,7 @@ import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, UpdateHelper.OnUpdateCheckListener{
     private static final int GALLERY_PICK = 1;
     DatabaseReference reference;
     String town, region;
@@ -67,7 +68,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.doctor_fab_btn).setOnClickListener(this);
         findViewById(R.id.pharmacy_fab_btn).setOnClickListener(this);
 
+        UpdateHelper.with(this)
+                .onUpdateCheck(this)
+                .check();
         updateNav();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UpdateHelper.with(this)
+                .onUpdateCheck(this)
+                .check();
     }
 
     @Override
@@ -206,4 +218,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return randomStringBuilder.toString();
     }
+
+    @Override
+    public void OnUpdateCheckListener(String urlApp) {
+        androidx.appcompat.app.AlertDialog alertDialog = new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Доступна новая версия")
+                .setMessage("")
+                .setCancelable(false)
+                .setPositiveButton("Обновить", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Uri myUrl = Uri.parse(urlApp);
+                        Intent update1 = new Intent(Intent.ACTION_VIEW).setData(myUrl);
+                        startActivity( update1 );
+                    }
+                }).create();
+        alertDialog.show();
+    }
+
+
 }

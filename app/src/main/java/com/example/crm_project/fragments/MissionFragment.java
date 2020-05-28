@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.example.crm_project.dataBase.DoctorList;
 import com.example.crm_project.fragments.RecyclerViewAdapter.Product;
 import com.example.crm_project.fragments.RecyclerViewAdapter.ProductAdapter;
 import com.example.crm_project.fragments.RecyclerViewAdapter.RecyclerViewClickInterface;
+import com.example.crm_project.startActivity.UpdateHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,7 +49,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class MissionFragment extends Fragment implements DatePickerDialog.OnDateSetListener, RecyclerViewClickInterface {
+public class MissionFragment extends Fragment implements DatePickerDialog.OnDateSetListener, RecyclerViewClickInterface  {
 
     //view
     private View view;
@@ -81,6 +83,7 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         current_user = user.getUid();
+
 
         words = getResources().getStringArray(R.array.managerArray);
 
@@ -385,8 +388,8 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 managerUrl = words[which];
-                if (managerUrl.equals("Феруза Пулатова")){
-                    reference.child("manager").setValue("hGuQZfTQ3qPbgmrEhcLauYDfLsv2");
+                if (managerUrl.equals("Ботиров Жамшид")){
+                    reference.child("manager").setValue("vMjkEZ1FIBRhPcOYQUQ1wj4yzE92");
                 }
                 if (managerUrl.equals("Салих Касимович")){
                     reference.child("manager").setValue("R4DcAQ34BSgJ9K8AJ34ncZ0jlo82");
@@ -411,5 +414,6 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.verification).setPositiveButton("Обновить", dialogVerification).setCancelable(false).show();
     }
+
 }
 

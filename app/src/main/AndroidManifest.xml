@@ -6,18 +6,19 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".startActivity.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_brmlab"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_brmlab"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".DoctorInformation"></activity>
+        <activity android:name=".DoctorInformation" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -31,8 +32,7 @@
         <activity android:name=".startActivity.OtpActivity" />
         <activity android:name=".startActivity.LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
