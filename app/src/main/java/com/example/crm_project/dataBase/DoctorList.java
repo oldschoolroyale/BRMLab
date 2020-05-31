@@ -2,6 +2,7 @@ package com.example.crm_project.dataBase;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -67,6 +68,22 @@ public class DoctorList extends AppCompatActivity implements AdapterView.OnItemC
         setContentView(R.layout.activity_doctor_list);
 
         startElements();
+        reference = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                townUrl = dataSnapshot.child("town_doctor").getValue().toString();
+                words = dataSnapshot.child("region").getValue().toString().split(" ");
+                categoryAlert();
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void startElements() {
@@ -92,26 +109,6 @@ public class DoctorList extends AppCompatActivity implements AdapterView.OnItemC
         listView = findViewById(R.id.lv_items);
         editText = findViewById(R.id.list_item_et_text);
         listView.setOnItemClickListener(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        reference = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                townUrl = dataSnapshot.child("town_doctor").getValue().toString();
-                words = dataSnapshot.child("region").getValue().toString().split(" ");
-                categoryAlert();
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void getItems() {
@@ -243,11 +240,10 @@ public class DoctorList extends AppCompatActivity implements AdapterView.OnItemC
         reference.setValue(userMap);
 
         Intent a = new Intent(DoctorList.this, MainActivity.class);
-        finish();
         startActivity(a);
+        finish();
         break;
                     case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
                         break;
                 }
             }
@@ -276,7 +272,7 @@ public class DoctorList extends AppCompatActivity implements AdapterView.OnItemC
             public void onClick(DialogInterface dialog, int which) {
                 regionUrl = words[which];
                 getItems();
-                dialog.dismiss();
+                dialog.cancel();
             }
         });
         builder.setNeutralButton("Отменить", new DialogInterface.OnClickListener() {

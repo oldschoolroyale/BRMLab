@@ -14,6 +14,10 @@
                     android:id="@+id/advertisement_movies_slide_button"
                     android:icon="@drawable/play"
                     android:title="@string/advertisment_movies" />
+                <item
+                    android:id="@+id/bonus_slide_button"
+                    android:icon="@drawable/bonus"
+                    android:title="@string/bonus_system" />
             </menu>
         </item>
         <item android:title="Дата база">

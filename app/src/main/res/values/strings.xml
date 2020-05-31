@@ -31,6 +31,7 @@
     <string name="add_label">Добавить</string>
     <string name="dismiss_label">Отменить</string>
     <string name="clear_label">Очистить</string>
+    <string name="bonus_system">Бонусная система</string>
 
 
     <string-array name="categoryOfMission">

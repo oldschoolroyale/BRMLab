@@ -10,9 +10,10 @@ public class UpdateHelper {
     public static String KEY_UPDATE_ENABLE = "isUpdate";
     public static String KEY_UPDATE_VERSION = "version";
     public static String KEY_UPDATE_URL = "update_url";
+    public static String KEY_UPDATE_TEXT = "update_text";
 
     public interface  OnUpdateCheckListener{
-        void OnUpdateCheckListener(String urlApp);
+        void OnUpdateCheckListener(String urlApp, String updateText);
     }
 
     public static Builder with(Context context){
@@ -31,9 +32,10 @@ public class UpdateHelper {
             String currentVersion = remoteConfig.getString(KEY_UPDATE_VERSION);
             String appVersion = getAppVersion(context);
             String updateUrl = remoteConfig.getString(KEY_UPDATE_URL);
+            String updateString = remoteConfig.getString(KEY_UPDATE_TEXT);
 
             if (!TextUtils.equals(currentVersion, appVersion) && onUpdateCheckListener != null)
-                onUpdateCheckListener.OnUpdateCheckListener(updateUrl);
+                onUpdateCheckListener.OnUpdateCheckListener(updateUrl, updateString);
         }
     }
 

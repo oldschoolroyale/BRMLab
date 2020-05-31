@@ -22,6 +22,7 @@ public class App extends Application {
         defaultValue.put(UpdateHelper.KEY_UPDATE_ENABLE, false);
         defaultValue.put(UpdateHelper.KEY_UPDATE_VERSION, "1.0");
         defaultValue.put(UpdateHelper.KEY_UPDATE_URL, "your App url");
+        defaultValue.put(UpdateHelper.KEY_UPDATE_TEXT, "-Исправлены ошибки системы");
 
         remoteConfig.setDefaults(defaultValue);
         remoteConfig.fetch(5)

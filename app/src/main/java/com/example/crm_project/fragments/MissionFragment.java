@@ -58,12 +58,13 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
     //var
     String timeStamp, current_user, strDate, medications, managerUrl;
     Double lonDBL, latDBL;
+    int bonusInt;
     //recycler
     RecyclerView recyclerView;
     ProductAdapter adapter;
     ArrayList<Product> productList;
     ProgressDialog loading;
-    DatabaseReference reference;
+    DatabaseReference reference, bonus;
     //other
     TextView dateText;
     LinearLayout linearLayout;
@@ -84,7 +85,7 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         current_user = user.getUid();
 
-
+        bonus = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
         words = getResources().getStringArray(R.array.managerArray);
 
         linearLayout = view.findViewById(R.id.fragment_mission_ll1);
@@ -182,6 +183,17 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
                 Toast.makeText(getActivity(), databaseError.toString(), Toast.LENGTH_LONG).show();
             }
         });
+        bonus.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bonusInt = Integer.parseInt(dataSnapshot.child("bonus").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -203,7 +215,6 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
     private void requestPermissions() {
         ActivityCompat.requestPermissions(getActivity(), new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -212,12 +223,10 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
 
     private boolean checkPermissionFromDevice() {
         int write_internal_storage_result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int record_audio_result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO);
         int access_fine_location = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
         int internet_connection = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.INTERNET);
         int gps_access = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION);
         return write_internal_storage_result == PackageManager.PERMISSION_GRANTED
-                && record_audio_result == PackageManager.PERMISSION_GRANTED
                 && access_fine_location == PackageManager.PERMISSION_GRANTED
                 && internet_connection == PackageManager.PERMISSION_GRANTED
                 && gps_access == PackageManager.PERMISSION_GRANTED;
@@ -288,7 +297,7 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
     public void onPlayClick(int position) {
         if (checkPermissionFromDevice()){
             if (timeStamp.equals(new SimpleDateFormat("ddMyyyy").format(Calendar.getInstance().getTime()))){
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                DialogInterface.OnClickListener playClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
@@ -310,8 +319,11 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(R.string.alert_dialog_start_message).setPositiveButton("Да", dialogClickListener)
-                        .setNegativeButton("Нет", dialogClickListener).show();
+                builder.setMessage(R.string.alert_dialog_start_message).setPositiveButton("Да", playClickListener)
+                        .setNegativeButton("Нет", playClickListener);
+                if (!getActivity().isFinishing()){
+                    builder.show();
+                }
             }
             else {Toast.makeText(getActivity(), "Визит можно выполнить только в запланированный день", Toast.LENGTH_LONG).show();}
 
@@ -329,13 +341,12 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.child("time_start").getValue().toString().equals("null")){
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    DialogInterface.OnClickListener stopClickListener = new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which){
                                 case DialogInterface.BUTTON_POSITIVE:
                                     //mediaRecorder.stop();
-                                    getLocation();
                                     getCurrentTime();
 
                                     reference.child("lon").setValue(lonDBL);
@@ -368,7 +379,10 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
                     };
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("Окончить визит?").setPositiveButton("Да", dialogClickListener).setNegativeButton("Нет", dialogClickListener).show();
+                    builder.setMessage("Окончить визит?").setPositiveButton("Да", stopClickListener).setNegativeButton("Нет", stopClickListener);
+                    if (!getActivity().isFinishing()){
+                        builder.show();
+                    }
                 }
                 else {Toast.makeText(getActivity(), "Этот визит еще не начат!", Toast.LENGTH_LONG).show();}
             }
@@ -378,6 +392,8 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
 
             }
         });
+        bonusInt = bonusInt + 1;
+        bonus.child("bonus").setValue(bonusInt);
     }
 
     private void categoryAlert(){

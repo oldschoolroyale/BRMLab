@@ -97,6 +97,7 @@ public class OtpActivity extends AppCompatActivity {
                         reference.child("town_pharmacy").setValue("null");
                         reference.child("region").setValue("null");
                         reference.child("manager").setValue("null");
+                        reference.child("bonus").setValue(0);
                         sendUserToHome();
 
                         // ...

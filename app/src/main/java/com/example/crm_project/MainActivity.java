@@ -220,10 +220,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void OnUpdateCheckListener(String urlApp) {
+    public void OnUpdateCheckListener(String urlApp, String updateText) {
         androidx.appcompat.app.AlertDialog alertDialog = new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("Доступна новая версия")
-                .setMessage("")
+                .setMessage(updateText)
                 .setCancelable(false)
                 .setPositiveButton("Обновить", new DialogInterface.OnClickListener() {
                     @Override

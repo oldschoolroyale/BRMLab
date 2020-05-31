@@ -67,6 +67,21 @@ public class PharmacyList extends AppCompatActivity implements AdapterView.OnIte
 
         startElements();
 
+        reference = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                townUrl = dataSnapshot.child("town_pharmacy").getValue().toString();
+                words = dataSnapshot.child("region").getValue().toString().split(" ");
+                categoryAlert();
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void startElements(){
@@ -126,25 +141,6 @@ public class PharmacyList extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        reference = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                townUrl = dataSnapshot.child("town_pharmacy").getValue().toString();
-                words = dataSnapshot.child("region").getValue().toString().split(" ");
-                categoryAlert();
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     private void parseItems(String jsonResponse) {
 

@@ -23,5 +23,10 @@
         android:id="@+id/data_base_pharmacy_slide_button"
         android:name="com.example.crm_project.dataBase.PharmacyList"
         android:label="PharmacyList" />
+    <fragment
+        android:id="@+id/bonus_slide_button"
+        android:name="com.example.crm_project.fragments.BonusFragment"
+        android:label="fragment_bonus"
+        tools:layout="@layout/fragment_bonus" />
 
 </navigation>
