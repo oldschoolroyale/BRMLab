@@ -60,7 +60,7 @@ public class DoctorList extends AppCompatActivity implements AdapterView.OnItemC
     String timeStamp, current_user, regionUrl, townUrl;
     TextView timeText;
     DatabaseReference reference;
-    String[]  words;
+    String[]  words, townArray;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +74,17 @@ public class DoctorList extends AppCompatActivity implements AdapterView.OnItemC
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 townUrl = dataSnapshot.child("town_doctor").getValue().toString();
                 words = dataSnapshot.child("region").getValue().toString().split(" ");
-                categoryAlert();
+                if (townUrl.equals("Ташкентская-Сырдарьинская")){
+                    townArray = getResources().getStringArray(R.array.tashSirdarya);
+                    townCategory();
+                }
+                else if (townUrl.equals("Навои-Бухара")){
+                    townArray = getResources().getStringArray(R.array.navoyiBuhoro);
+                    townCategory();
+                }
+                else {
+                    categoryAlert();
+                }
             }
 
 
@@ -258,7 +268,12 @@ public class DoctorList extends AppCompatActivity implements AdapterView.OnItemC
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        timeStamp = "" + dayOfMonth + (monthOfYear + 1) + year;
+        if (dayOfMonth <= 9){
+            timeStamp = "0" + dayOfMonth + (monthOfYear + 1) + year;
+        }
+        else {
+            timeStamp = "" + dayOfMonth + (monthOfYear + 1) + year;
+        }
         String dateShow = "Выбрано: " + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
         timeText.setText(dateShow);
     }
@@ -283,6 +298,67 @@ public class DoctorList extends AppCompatActivity implements AdapterView.OnItemC
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void townCategory() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DoctorList.this);
+        builder.setTitle("Выберите область");
+        builder.setCancelable(false);
+        builder.setSingleChoiceItems(townArray, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String town = townArray[which];
+                if (town.equals("Ташкентская область")){
+                    townUrl = "https://script.google.com/macros/s/AKfycbz7i3CoqSSiJwC-49Ul19JJmbihWWASUcg6M3p5M71vg80cBlU/exec";
+                    categoryAlert();
+                }
+                if (town.equals("Навоинская область")){
+                    townUrl = "https://script.google.com/macros/s/AKfycbw9Sx8U91AnNYLHQ3g1zzjmkpF-LOiJcFe6fcg7BZxnGZZWf-I/exec";
+                    categoryAlert();
+                }
+                if (town.equals("Бухарская область")){
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            words = dataSnapshot.child("region2").getValue().toString().split(" ");
+                            categoryAlert();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    townUrl = "https://script.google.com/macros/s/AKfycbwzEBxBhrxTVQ21Qq46upQTfmHYne9OZvP5WXUbwVDaApPofNg/exec";
+
+                }
+                if (town.equals("Сырдаринская область")){
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            words = dataSnapshot.child("region2").getValue().toString().split(" ");
+                            categoryAlert();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    townUrl = "https://script.google.com/macros/s/AKfycbw0lUC898Q1zFlk1DJad5ttYL7SP-3mFS7NrH4oGXavmH6mYXk/exec";
+
+                }
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
 

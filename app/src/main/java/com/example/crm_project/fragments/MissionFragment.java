@@ -266,7 +266,13 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        timeStamp = "" + dayOfMonth + (monthOfYear + 1) + year;
+        if (dayOfMonth <= 9){
+            timeStamp = "0" + dayOfMonth + (monthOfYear + 1) + year;
+        }
+        else {
+            timeStamp = "" + dayOfMonth + (monthOfYear + 1) + year;
+        }
+
         String dateShow = dayOfMonth + "." + (monthOfYear + 1) + "." + year;
         dateText.setText(dateShow);
         dataRetrieve();

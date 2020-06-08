@@ -28,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.crm_project.MainActivity;
 import com.example.crm_project.R;
+import com.example.crm_project.addActivities.PharmacyAdd;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -58,7 +59,7 @@ public class PharmacyList extends AppCompatActivity implements AdapterView.OnIte
     String timeStamp,current_user, regionUrl, townUrl;
     TextView timeText;
     DatabaseReference reference;
-    String[]  words;
+    String[]  words, townArray;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,7 +74,17 @@ public class PharmacyList extends AppCompatActivity implements AdapterView.OnIte
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 townUrl = dataSnapshot.child("town_pharmacy").getValue().toString();
                 words = dataSnapshot.child("region").getValue().toString().split(" ");
-                categoryAlert();
+                if (townUrl.equals("Ташкентская-Сырдарьинская")){
+                    townArray = getResources().getStringArray(R.array.tashSirdarya);
+                    townCategory();
+                }
+                else if (townUrl.equals("Навои-Бухара")){
+                    townArray = getResources().getStringArray(R.array.navoyiBuhoro);
+                    townCategory();
+                }
+                else {
+                    categoryAlert();
+                }
             }
 
 
@@ -255,7 +266,12 @@ public class PharmacyList extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        timeStamp = "" + dayOfMonth + (monthOfYear + 1) + year;
+        if (dayOfMonth <= 9){
+            timeStamp = "0" + dayOfMonth + (monthOfYear + 1) + year;
+        }
+        else {
+            timeStamp = "" + dayOfMonth + (monthOfYear + 1) + year;
+        }
         String dateShow = "Выбрано: " + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
         timeText.setText(dateShow);
     }
@@ -280,6 +296,67 @@ public class PharmacyList extends AppCompatActivity implements AdapterView.OnIte
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void townCategory() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(PharmacyList.this);
+        builder.setTitle("Выберите область");
+        builder.setCancelable(false);
+        builder.setSingleChoiceItems(townArray, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String town = townArray[which];
+                if (town.equals("Ташкентская область")){
+                    townUrl = "https://script.google.com/macros/s/AKfycbynNT5CbnJ5RZtqzzI4oKPUT5pOnRjX8BdAFCcB-stGaXsl3t3v/exec";
+                    categoryAlert();
+                }
+                if (town.equals("Навоинская область")){
+                    townUrl = "https://script.google.com/macros/s/AKfycbzou4oz1yOd7jMPrdi_v_dYN46Uc-lXDnPfKCGPbd3_g9CaHVti/exec";
+                    categoryAlert();
+                }
+                if (town.equals("Бухарская область")){
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            words = dataSnapshot.child("region2").getValue().toString().split(" ");
+                            categoryAlert();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    townUrl = "https://script.google.com/macros/s/AKfycbzZlIgT1k6k3kxfXPOg0KdzMfh24dc8pIalXmOi8sdinbn-MWAl/exec";
+
+                }
+                if (town.equals("Сырдаринская область")){
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            words = dataSnapshot.child("region2").getValue().toString().split(" ");
+                            categoryAlert();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    townUrl = "https://script.google.com/macros/s/AKfycbyJbc-gskLz5_9CzwoNAVexD3OPyKDGI9IGe_EUI3wPJRWlTm0/exec";
+
+                }
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
 

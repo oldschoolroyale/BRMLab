@@ -62,8 +62,11 @@ public class DoctorInformation extends AppCompatActivity implements View.OnClick
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String current_user = user.getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        chooseString = "null";
+
+        DatabaseReference medReference = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
+        medReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 medications = dataSnapshot.child("medications").getValue().toString();
@@ -223,7 +226,7 @@ public class DoctorInformation extends AppCompatActivity implements View.OnClick
               chooseAlert();
                 break;
             case R.id.doctor_information_button_add:
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Notes").child(getIntent().getStringExtra("id")).child("Date"+getIntent().getStringExtra("time")).child(getIntent().getStringExtra("note"));
+               DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Notes").child(getIntent().getStringExtra("id")).child("Date"+getIntent().getStringExtra("time")).child(getIntent().getStringExtra("note"));
                 reference.child("comment").setValue(commentEdit.getText().toString());
                 reference.child("medications").setValue(chooseString);
                 finish();

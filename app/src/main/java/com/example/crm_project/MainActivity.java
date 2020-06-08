@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String current_user = user.getUid();
+        DatabaseReference version = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
+        version.child("version").setValue("1.25");
         reference = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
 
         findViewById(R.id.app_bar_menu_button).setOnClickListener(this);

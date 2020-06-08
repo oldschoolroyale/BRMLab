@@ -39,12 +39,10 @@
         <item>B</item>
         <item>C</item>
     </string-array>
-
     <string-array name="statusOfMission">
         <item>Активный</item>
         <item>Не активный</item>
     </string-array>
-
     <string-array name="test">
         <item>Item1</item>
         <item>Item2</item>
@@ -53,5 +51,13 @@
     <string-array name="managerArray">
         <item>Ботиров Жамшид</item>
         <item>Салих Касимович</item>
+    </string-array>
+    <string-array name="tashSirdarya">
+        <item>Ташкентская область</item>
+        <item>Сырдаринская область</item>
+    </string-array>
+    <string-array name="navoyiBuhoro">
+        <item>Навоинская область</item>
+        <item>Бухарская область</item>
     </string-array>
 </resources>

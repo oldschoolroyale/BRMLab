@@ -47,7 +47,7 @@ public class PharmacyAdd extends AppCompatActivity implements AdapterView.OnItem
     String   statusText, current_user, userName, mapString, townUrl, regionUrl;
     Button btnSaveTask, btnCancel, btnMap;
     DatabaseReference reference;
-    String[]  words;
+    String[]  words, townArray;
 
 
 
@@ -100,7 +100,17 @@ public class PharmacyAdd extends AppCompatActivity implements AdapterView.OnItem
                     addressEdit.setError("Обязательное поле");
                 }
                 else {
-                    categoryAlert();
+                    if (townUrl.equals("Ташкентская-Сырдарьинская")){
+                        townArray = getResources().getStringArray(R.array.tashSirdarya);
+                        townCategory();
+                    }
+                    else if (townUrl.equals("Навои-Бухара")){
+                        townArray = getResources().getStringArray(R.array.navoyiBuhoro);
+                        townCategory();
+                    }
+                    else {
+                        categoryAlert();
+                    }
                 }
 
 
@@ -235,6 +245,61 @@ public class PharmacyAdd extends AppCompatActivity implements AdapterView.OnItem
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void townCategory() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(PharmacyAdd.this);
+        builder.setTitle("Выберите область");
+        builder.setCancelable(false);
+        builder.setSingleChoiceItems(townArray, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String town = townArray[which];
+                if (town.equals("Ташкентская область")){
+                    townUrl = "https://script.google.com/macros/s/AKfycbynNT5CbnJ5RZtqzzI4oKPUT5pOnRjX8BdAFCcB-stGaXsl3t3v/exec";
+                    categoryAlert();
+                }
+                if (town.equals("Навоинская область")){
+                    townUrl = "https://script.google.com/macros/s/AKfycbzou4oz1yOd7jMPrdi_v_dYN46Uc-lXDnPfKCGPbd3_g9CaHVti/exec";
+                    categoryAlert();
+                }
+                if (town.equals("Бухарская область")){
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            words = dataSnapshot.child("region2").getValue().toString().split(" ");
+                            categoryAlert();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    townUrl = "https://script.google.com/macros/s/AKfycbzZlIgT1k6k3kxfXPOg0KdzMfh24dc8pIalXmOi8sdinbn-MWAl/exec";
+
+                }
+                if (town.equals("Сырдаринская область")){
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            words = dataSnapshot.child("region2").getValue().toString().split(" ");
+                            categoryAlert();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    townUrl = "https://script.google.com/macros/s/AKfycbyJbc-gskLz5_9CzwoNAVexD3OPyKDGI9IGe_EUI3wPJRWlTm0/exec";
+
+                }
+                dialog.dismiss();
             }
         });
         AlertDialog dialog = builder.create();
