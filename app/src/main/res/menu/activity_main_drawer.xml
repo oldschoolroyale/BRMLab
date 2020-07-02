@@ -18,6 +18,10 @@
                     android:id="@+id/bonus_slide_button"
                     android:icon="@drawable/bonus"
                     android:title="@string/bonus_system" />
+                <item
+                    android:id="@+id/chat_slide_button"
+                    android:icon="@drawable/smartwatch"
+                    android:title="@string/local_chat"/>
             </menu>
         </item>
         <item android:title="Дата база">
@@ -36,6 +40,10 @@
 
         <item android:title="Другое">
             <menu>
+                <item
+                    android:id="@+id/contact_slide_button"
+                    android:icon="@drawable/telephone"
+                    android:title="@string/contacts"/>
                 <item
                     android:id="@+id/exit_slide_button"
                     android:icon="@drawable/sign_out"

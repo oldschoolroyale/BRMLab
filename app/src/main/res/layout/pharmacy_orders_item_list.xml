@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:id="@+id/pharmacy_orders_medications_name_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_semibold"
+        android:textColor="@color/textDefault"
+        android:textSize="15sp"
+        android:layout_toLeftOf="@id/pharmacy_orders_linearLayout"
+         />
+
+    <LinearLayout
+        android:id="@+id/pharmacy_orders_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pharmacy_orders_relative_layout1"
+            >
+
+            <EditText
+                android:layout_width="@dimen/pharmacy_edit_60dp"
+                android:layout_height="@dimen/pharmacy_edit_40dp"
+                android:id="@+id/pharmacy_orders_medications_edit_text"
+                android:inputType="number" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

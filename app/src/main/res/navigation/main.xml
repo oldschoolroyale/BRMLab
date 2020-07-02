@@ -7,26 +7,31 @@
 
     <fragment
         android:id="@+id/home_slide_button"
-        android:name="com.example.crm_project.fragments.MissionFragment"
+        android:name="com.brm.uz.fragments.MissionFragment"
         android:label="Задачи"
         tools:layout="@layout/fragment_missions" />
     <fragment
         android:id="@+id/exit_slide_button"
-        android:name="com.example.crm_project.fragments.QuitFragment"
+        android:name="com.brm.uz.fragments.QuitFragment"
         android:label="fragment_quit"
         tools:layout="@layout/fragment_quit" />
     <activity
         android:id="@+id/data_base_slide_button"
-        android:name="com.example.crm_project.dataBase.DoctorList"
+        android:name="com.brm.uz.dataList.DoctorList"
         android:label="ListItem" />
     <activity
         android:id="@+id/data_base_pharmacy_slide_button"
-        android:name="com.example.crm_project.dataBase.PharmacyList"
+        android:name="com.brm.uz.dataList.PharmacyList"
         android:label="PharmacyList" />
     <fragment
         android:id="@+id/bonus_slide_button"
-        android:name="com.example.crm_project.fragments.BonusFragment"
+        android:name="com.brm.uz.fragments.BonusFragment"
         android:label="fragment_bonus"
         tools:layout="@layout/fragment_bonus" />
+    <fragment
+        android:id="@+id/chat_slide_button"
+        android:name="com.brm.uz.fragments.ChatUsersFragment"
+        android:label="activity_chat_users"
+        tools:layout="@layout/activity_chat_users" />
 
 </navigation>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    tools:context=".activities.PharmacyActivity"
+    >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F4F4F4"
+            android:layout_above="@id/pharmacy_orders_button_new_order"
+            android:layout_marginBottom="@dimen/margin5dp"
+            >
+            <LinearLayout
+                android:id="@+id/pharmacy_orders_linearLayout4"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bgitemdoes"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/margin5dp"
+                android:layout_marginTop="@dimen/margin5dp"
+                >
+                <LinearLayout
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="@dimen/margin15dp"
+                        android:id="@+id/activity_pharmacy_orders_radio_group"
+
+                        >
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pay100"
+                            android:layout_weight="1"
+                            android:id="@+id/activity_pharmacy_radio_100"
+                            android:onClick="radioButton"/>
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pay50"
+                            android:layout_weight="1"
+                            android:id="@+id/activity_pharmacy_radio_50"
+                            android:onClick="radioButton"/>
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pay25"
+                            android:layout_weight="1"
+                            android:id="@+id/activity_pharmacy_radio_25"
+                            android:onClick="radioButton"/>
+                    </RadioGroup>
+                    <TextView
+                        android:id="@+id/activity_pharmacy_orders_final_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:textSize="@dimen/text15sp"
+                        android:layout_margin="5dp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:background="@color/blue_dark"
+                android:layout_height="120dp"
+                android:id="@+id/pharmacy_orders_linearLayout1"
+                >
+
+                <TextView
+                    android:id="@+id/titlepage"
+                    android:layout_marginTop="20dp"
+                    android:textSize="22sp"
+                    android:textColor="#FFF"
+                    android:text="Работа с аптекой"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@android:color/black"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/activity_pharmacy_orders_ll1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bgitemdoes"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:layout_marginTop="-30dp"
+                >
+
+                <LinearLayout
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Остаток"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pharmacy_orders_medications_recycler_view"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/pharmacy_orders_linearLayout3"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bgitemdoes"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+
+                >
+
+                <LinearLayout
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Остаток"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pharmacy_orders_new_order_recycler_view"
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    <Button
+        android:id="@+id/pharmacy_orders_button_new_order"
+        android:text="Бронь"
+        android:textColor="#FFF"
+        android:textAllCaps="false"
+        android:background="@drawable/bgbtnblue"
+        android:textSize="22sp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_above="@+id/pharmacy_orders_button_add" />
+    <Button
+        android:id="@+id/pharmacy_orders_button_add"
+        android:text="Готово"
+        android:textColor="#FFF"
+        android:textAllCaps="false"
+        android:background="@drawable/bgbtncreate"
+        android:textSize="22sp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"/>
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pharmacy_orders_progress_bar"
+        android:layout_width="@dimen/circular40dp"
+        android:layout_height="@dimen/circular40dp"
+        app:cpv_animAutostart="true"
+        app:cpv_indeterminate="true"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>

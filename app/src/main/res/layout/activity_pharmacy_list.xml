@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,14 +7,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F4F4F4"
-    tools:context=".MainActivity"
+    tools:context=".activities.MainActivity"
     android:focusableInTouchMode="true">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:background="@color/blue_dark"
-        android:layout_height="170dp">
+        android:layout_height="170dp"
+        android:id="@+id/pharmacy_list_ll1">
 
         <EditText
             android:id="@+id/activity_pharmacy_list_editText"
@@ -52,6 +53,15 @@
 
     </LinearLayout>
 
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pharmacy_list_progress_bar"
+        android:layout_width="@dimen/circular40dp"
+        android:layout_height="@dimen/circular40dp"
+        app:cpv_animAutostart="true"
+        app:cpv_indeterminate="true"
+        android:layout_centerInParent="true"/>
+
     <LinearLayout
 
         android:layout_marginTop="-60dp"
@@ -59,7 +69,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="22dp"
-        android:paddingTop="22dp">
+        android:paddingTop="22dp"
+        android:layout_below="@+id/pharmacy_list_ll1">
 
         <ListView
             android:id="@+id/activity_pharmacy_list_list_view"
@@ -71,6 +82,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
 
 

@@ -1,164 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F4F4F4"
-    tools:context=".MainActivity"
+    tools:context=".activities.MainActivity"
     android:paddingBottom="10dp"
     >
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#F4F4F4">
-
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:background="@color/blue_dark"
-            android:layout_height="170dp">
+            android:layout_height="match_parent"
+            android:background="#F4F4F4"
+            android:id="@+id/activity_doctor_information_ll1">
 
-            <TextView
-                android:id="@+id/titlepage"
-                android:layout_marginTop="20dp"
-                android:textSize="22sp"
-                android:textColor="#FFF"
-                android:text="Дополнительная информация"
-                android:textAlignment="center"
-                android:layout_marginBottom="18dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:background="#131E69"
-                android:layout_height="0.5dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="-60dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bgitemdoes"
-            android:orientation="vertical"
-            android:paddingBottom="22dp"
-            android:paddingTop="22dp">
 
             <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:background="@color/blue_dark"
+                android:layout_height="170dp">
 
                 <TextView
-                    android:textSize="18sp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:text="Категория"
-                    android:layout_marginBottom="10dp"
+                    android:id="@+id/titlepage"
+                    android:layout_marginTop="20dp"
+                    android:textSize="22sp"
+                    android:textColor="#FFF"
+                    android:text="Дополнительная информация"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="18dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <Button
-                    android:id="@+id/doctor_information_category_button"
-                    android:text="Выбрать"
-                    android:textColor="#FFF"
-                    android:textAllCaps="false"
-                    android:background="@drawable/bgbtnblue"
-                    android:textSize="18sp"
+                <View
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="20dp" />
+                    android:background="#131E69"
+                    android:layout_height="0.5dp" />
 
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
-                android:orientation="vertical"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="-60dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/doctor_information_ll2">
+                android:background="@drawable/bgitemdoes"
+                android:orientation="vertical"
+                android:paddingBottom="22dp"
+                android:paddingTop="22dp">
 
-                <TextView
-                    android:textSize="18sp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:text="Препарат"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/doctor_information_choose_button"
-                    android:text="Выбрать"
-                    android:textColor="#FFF"
-                    android:textAllCaps="false"
-                    android:background="@drawable/bgbtnblue"
-                    android:textSize="18sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
+                <LinearLayout
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginLeft="16dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Категория"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/doctor_information_category_button"
+                        android:text="Выбрать"
+                        android:textColor="#FFF"
+                        android:textAllCaps="false"
+                        android:background="@drawable/bgbtnblue"
+                        android:textSize="18sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="20dp" />
+
+                </LinearLayout>
+                <LinearLayout
                     android:layout_marginTop="20dp"
-                    android:clickable="false"/>
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:id="@+id/doctor_information_ll2">
 
+                    <TextView
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Препарат"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/doctor_information_choose_button"
+                        android:text="Выбрать"
+                        android:textColor="#FFF"
+                        android:textAllCaps="false"
+                        android:background="@drawable/bgbtnblue"
+                        android:textSize="18sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="20dp"
+                        android:clickable="false"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Коментарии к визиту"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/doctor_information_comment_edit_text"
+                        android:inputType="text"
+                        android:background="@drawable/bginputtask"
+                        android:paddingLeft="12dp"
+                        android:textColorHint="@color/textGrey"
+                        android:maxLength="100"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:hint="Коментарии в свободной форме"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp" />
+
+                </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="20dp"
+            <Button
+                android:id="@+id/doctor_information_button_add"
+                android:text="Готово"
+                android:textColor="#FFF"
+                android:textAllCaps="false"
+                android:background="@drawable/bgbtncreate"
+                android:textSize="22sp"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_marginTop="20dp" />
 
-                <TextView
-                    android:textSize="18sp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:text="Коментарии к визиту"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
-                <EditText
-                    android:id="@+id/doctor_information_comment_edit_text"
-                    android:inputType="text"
-                    android:background="@drawable/bginputtask"
-                    android:paddingLeft="12dp"
-                    android:textColorHint="@color/textGrey"
-                    android:maxLength="100"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:hint="Коментарии в свободной форме"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp" />
 
-            </LinearLayout>
         </LinearLayout>
-        <Button
-            android:id="@+id/doctor_information_button_add"
-            android:text="Готово"
-            android:textColor="#FFF"
-            android:textAllCaps="false"
-            android:background="@drawable/bgbtncreate"
-            android:textSize="22sp"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="20dp" />
+    </ScrollView>
 
-
-
-    </LinearLayout>
-</ScrollView>
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/doctor_information_progress_bar"
+        android:layout_width="@dimen/circular40dp"
+        android:layout_height="@dimen/circular40dp"
+        app:cpv_animAutostart="true"
+        app:cpv_indeterminate="true"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+</RelativeLayout>

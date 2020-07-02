@@ -32,6 +32,12 @@
     <string name="dismiss_label">Отменить</string>
     <string name="clear_label">Очистить</string>
     <string name="bonus_system">Бонусная система</string>
+    <string name="local_chat">Внутренний чат</string>
+    <string name="contacts">Обратная связь</string>
+    <string name="done">Готово</string>
+    <string name="pay100">100%</string>
+    <string name="pay50">50%</string>
+    <string name="pay25">25%</string>
 
 
     <string-array name="categoryOfMission">
@@ -51,6 +57,9 @@
     <string-array name="managerArray">
         <item>Ботиров Жамшид</item>
         <item>Салих Касимович</item>
+        <item>Турсунова Юлдуз</item>
+        <item>Каршиев Рустам</item>
+        <item>Таваккал Акрамов</item>
     </string-array>
     <string-array name="tashSirdarya">
         <item>Ташкентская область</item>

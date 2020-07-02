@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.startActivity.ProfileActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/activity_profile_circle_image"
+        android:layout_width="@dimen/circleImage96dp"
+        android:layout_height="@dimen/circleImage96dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/avatar"
+        android:scaleType="centerCrop"
+        />
+    <LinearLayout
+        android:id="@+id/activity_profile_main_linear_layout"
+        android:layout_below="@+id/activity_profile_circle_image"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bgitemdoes"
+        android:orientation="vertical"
+        android:paddingBottom="22dp"
+        android:paddingTop="22dp">
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Имя"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/activity_profile_name_edit"
+                android:inputType="text"
+                android:background="@drawable/bginputtask"
+                android:paddingLeft="12dp"
+                android:maxLength="50"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="55dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Фамилия"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/activity_profile_surname_edit"
+                android:inputType="text"
+                android:background="@drawable/bginputtask"
+                android:paddingLeft="12dp"
+                android:maxLength="50"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="55dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:layout_below="@+id/activity_profile_main_linear_layout"
+        android:id="@+id/activity_profile_button_save"
+        android:layout_marginTop="@dimen/margin25dp"
+        android:text="@string/done"
+        android:textColor="#FFF"
+        android:textAllCaps="false"
+        android:background="@drawable/bgbtncreate"
+        android:textSize="22sp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginLeft="@dimen/margin8dp"
+        android:layout_marginRight="@dimen/margin8dp"/>
+
+
+
+
+
+</RelativeLayout>

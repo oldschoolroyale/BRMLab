@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.MissionFragment"
+    android:background="@android:color/white"
     >
     <TextView
         android:layout_width="wrap_content"
@@ -16,6 +17,7 @@
         android:layout_margin="5dp"
         android:paddingLeft="10dp"
         android:id="@+id/fragment_mission_date_text"/>
+
     <ImageView
         android:layout_width="25dp"
         android:layout_height="25dp"
@@ -25,6 +27,17 @@
         android:layout_margin="5dp"/>
 
 
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mission_progress_bar"
+        android:layout_width="@dimen/circular40dp"
+        android:layout_height="@dimen/circular40dp"
+        app:cpv_animAutostart="true"
+        app:cpv_indeterminate="true"
+        android:layout_centerInParent="true"/>
+
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_missions_recycler_view"
@@ -32,11 +45,12 @@
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/fragment_mission_date_text"
-        android:visibility="visible"/>
+        android:layout_below="@+id/fragment_mission_calendar"
+        android:visibility="visible" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
