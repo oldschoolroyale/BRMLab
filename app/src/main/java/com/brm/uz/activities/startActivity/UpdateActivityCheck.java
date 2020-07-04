@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -17,9 +18,9 @@ import androidx.core.content.FileProvider;
 import com.brm.uz.BuildConfig;
 import com.brm.uz.R;
 import com.brm.uz.activities.MainActivity;
+import com.brm.uz.helper.UpdateHelper;
 import com.bumptech.glide.Glide;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -28,6 +29,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Random;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -36,6 +38,7 @@ public class UpdateActivityCheck extends AppCompatActivity implements UpdateHelp
     CircularProgressView loading;
     private ProgressDialog pDialog;
     private GifImageView gifImageView;
+    private TextView mainText;
 
     public static final int progress_bar_type = 0;
     private static String file_url;
@@ -46,9 +49,13 @@ public class UpdateActivityCheck extends AppCompatActivity implements UpdateHelp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_check);
 
+
+
         loading = findViewById(R.id.activity_update_check_circular_progress_bar);
         gifImageView = findViewById(R.id.activity_update_check_gif);
+        mainText = findViewById(R.id.activity_update_check_text_view);
 
+        mainText.setText(randomText(getResources().getStringArray(R.array.startText)));
         loading.setVisibility(View.VISIBLE);
 
         Glide.with(getApplicationContext())
@@ -175,5 +182,10 @@ public class UpdateActivityCheck extends AppCompatActivity implements UpdateHelp
         Intent intent = new Intent(UpdateActivityCheck.this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private String randomText(String[] text){
+        int rnd = new Random().nextInt(text.length);
+        return text[rnd];
     }
 }

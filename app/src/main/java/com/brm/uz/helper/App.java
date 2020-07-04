@@ -1,9 +1,10 @@
-package com.brm.uz.activities.startActivity;
+package com.brm.uz.helper;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 
+import com.brm.uz.helper.UpdateHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;

@@ -39,6 +39,11 @@
     <string name="pay50">50%</string>
     <string name="pay25">25%</string>
     <string name="update_text">Загружаем хорошее настроение</string>
+    <string name="brmlab_czech_republic">BRMLab Czech Republic</string>
+    <string name="medications">Препараты</string>
+    <string name="comment">Коментарий</string>
+    <string name="ready">Готово</string>
+    <string name="permission_text">Нажмите готово, после выдачи всех необходимых прав для приложения \n (Если ничего не всплывает, включите разрешения в настройках)</string>
 
 
     <string-array name="categoryOfMission">
@@ -55,13 +60,6 @@
         <item>Item2</item>
         <item>Item3</item>
     </string-array>
-    <string-array name="managerArray">
-        <item>Ботиров Жамшид</item>
-        <item>Салих Касимович</item>
-        <item>Турсунова Юлдуз</item>
-        <item>Каршиев Рустам</item>
-        <item>Таваккал Акрамов</item>
-    </string-array>
     <string-array name="tashSirdarya">
         <item>Ташкентская область</item>
         <item>Сырдаринская область</item>
@@ -69,5 +67,13 @@
     <string-array name="navoyiBuhoro">
         <item>Навоинская область</item>
         <item>Бухарская область</item>
+    </string-array>
+    <string-array name="startText">
+        <item>Загружаем хорошее настроение!</item>
+        <item>Хорошего дня!</item>
+        <item>Настраиваем улыбочки!</item>
+        <item>Подгружаем кофе!</item>
+        <item>Улыбнитесь! :)</item>
+        <item>Пунктуальность - залог хороших отношений!</item>
     </string-array>
 </resources>

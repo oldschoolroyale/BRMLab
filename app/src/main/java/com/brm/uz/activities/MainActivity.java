@@ -23,7 +23,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.brm.uz.R;
 import com.brm.uz.activities.addActivities.DoctorAdd;
 import com.brm.uz.activities.addActivities.PharmacyAdd;
-import com.brm.uz.activities.startActivity.UpdateHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;

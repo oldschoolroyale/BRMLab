@@ -26,13 +26,16 @@
                 android:textSize="@dimen/text15sp"
                 android:id="@+id/orders_stock_text_view"
                 android:layout_below="@id/orders_medications_name_text_view"
-                android:layout_marginTop="@dimen/margin5dp" />
+                android:layout_marginTop="@dimen/margin5dp"
+                android:paddingBottom="@dimen/margin5dp"/>
             <EditText
                 android:layout_width="@dimen/pharmacy_edit_60dp"
                 android:layout_height="@dimen/pharmacy_edit_40dp"
                 android:id="@+id/orders_medications_edit_text"
                 android:inputType="number"
+                android:textSize="@dimen/margin15dp"
                 android:layout_alignParentRight="true"
+                android:paddingBottom="@dimen/margin5dp"
                 />
             <LinearLayout
                 android:layout_width="match_parent"

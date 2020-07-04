@@ -59,11 +59,20 @@
                         android:fontFamily="@font/nunito_semibold"
                         />
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="@dimen/margin20dp"
+                        android:layout_height="@dimen/margin20dp"
                         android:layout_alignParentEnd="true"
                         android:src="@drawable/ic_cancel"
                         android:id="@+id/card_view_delete"
+
+                        />
+                    <ImageView
+                        android:layout_width="@dimen/margin20dp"
+                        android:layout_height="@dimen/margin20dp"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_edit"
+                        android:id="@+id/card_view_edit"
+                        android:visibility="gone"
                         />
 
                 </RelativeLayout>
@@ -118,16 +127,16 @@
                         android:fontFamily="@font/nunito_semibold"
                         />
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="@dimen/margin20dp"
+                        android:layout_height="@dimen/margin20dp"
                         android:src="@drawable/ic_play"
                         android:id="@+id/card_view_button_play"
                         android:layout_marginRight="20dp"
                         android:layout_toLeftOf="@+id/card_view_button_stop"
                         />
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="@dimen/margin20dp"
+                        android:layout_height="@dimen/margin20dp"
                         android:src="@drawable/ic_stop"
                         android:layout_alignParentRight="true"
                         android:id="@+id/card_view_button_stop"

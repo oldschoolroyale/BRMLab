@@ -20,11 +20,10 @@
         android:id="@+id/activity_update_check_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/update_text"
         android:layout_above="@id/activity_update_check_circular_progress_bar"
         android:gravity="center"
-        android:layout_marginBottom="@dimen/margin25dp"
-        android:textSize="@dimen/text25sp"
+        android:layout_margin="@dimen/margin25dp"
+        android:textSize="@dimen/margin25dp"
         android:textColor="@android:color/white"
         android:fontFamily="@font/nunito_bold"
         />
@@ -37,5 +36,14 @@
         app:cpv_animAutostart="true"
         app:cpv_indeterminate="true"
         android:layout_centerInParent="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/brmlab_czech_republic"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="@dimen/margin5dp"/>
 
 </RelativeLayout>

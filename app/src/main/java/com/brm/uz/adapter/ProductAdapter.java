@@ -50,7 +50,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.timeText.setText(productList.get(position).getTime());
         holder.timeStart.setText(productList.get(position).getTimeStart());
         holder.timeEnd.setText(productList.get(position).getTimeEnd());
-        holder.medications.setText(productList.get(position).getMedications());
 
         logic(holder, position);
 
@@ -80,19 +79,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             holder.timeEnd.setVisibility(View.GONE);
             holder.timeStart.setVisibility(View.GONE);
         }
-        if (!holder.medications.getText().equals("null")){
-            holder.medications.setVisibility(View.VISIBLE);
-        }
-        else {
-            holder.medications.setVisibility(View.GONE);
-        }
-        if (holder.visitName.getText().equals("Визит окончен")){
+        if (productList.get(position).getVisit().equals("Визит окончен")){
             holder.visitName.setTextColor(Color.parseColor("#d22136"));
             holder.playImage.setVisibility(View.GONE);
             holder.stopImage.setVisibility(View.GONE);
             holder.deleteImage.setVisibility(View.GONE);
             holder.timeStart.setVisibility(View.VISIBLE);
             holder.timeEnd.setVisibility(View.VISIBLE);
+            holder.editImage.setVisibility(View.VISIBLE);
         }
     }
 
@@ -102,8 +96,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     class ProductViewHolder extends RecyclerView.ViewHolder{
-        ImageView playImage, stopImage, deleteImage;
-        TextView adapterType, adapterAddress, adapterName, visitName, timeText, timeStart, timeEnd, medications;
+        ImageView playImage, stopImage, deleteImage, editImage;
+        TextView adapterType, adapterAddress, adapterName, visitName, timeText, timeStart, timeEnd;
         LinearLayout linearLayout;
         View view;
 
@@ -121,7 +115,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             deleteImage = itemView.findViewById(R.id.card_view_delete);
             timeStart = itemView.findViewById(R.id.card_view_time_start);
             timeEnd = itemView.findViewById(R.id.card_view_time_end);
-            medications = itemView.findViewById(R.id.card_view_medications);
+            editImage = itemView.findViewById(R.id.card_view_edit);
 
             playImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -145,6 +139,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 @Override
                 public void onClick(View v) {
                     recyclerViewClickInterface.onItemClick(getAdapterPosition());
+                }
+            });
+            editImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recyclerViewClickInterface.onItemEdit(getAdapterPosition());
                 }
             });
         }

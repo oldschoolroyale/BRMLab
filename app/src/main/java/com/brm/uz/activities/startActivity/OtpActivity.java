@@ -2,8 +2,11 @@ package com.brm.uz.activities.startActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -122,7 +125,6 @@ public class OtpActivity extends AppCompatActivity {
             });
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -132,10 +134,31 @@ public class OtpActivity extends AppCompatActivity {
     }
 
     public void sendUserToHome() {
-        Intent homeIntent = new Intent(OtpActivity.this, UpdateActivityCheck.class);
-        homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(homeIntent);
-        finish();
+        if (!checkPermissionFromDevice()){
+            Intent permissionIntent = new Intent(OtpActivity.this, PermissionActivity.class);
+            permissionIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            permissionIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(permissionIntent);
+            finish();
+        }
+        else {
+            Intent homeIntent = new Intent(OtpActivity.this, UpdateActivityCheck.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            startActivity(homeIntent);
+            finish();
+        }
+    }
+
+    private boolean checkPermissionFromDevice() {
+        int write_internal_storage_result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int access_fine_location = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int internet_connection = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
+        int gps_access = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        return write_internal_storage_result == PackageManager.PERMISSION_GRANTED
+                && access_fine_location == PackageManager.PERMISSION_GRANTED
+                && internet_connection == PackageManager.PERMISSION_GRANTED
+                && gps_access == PackageManager.PERMISSION_GRANTED;
     }
 }

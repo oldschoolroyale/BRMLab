@@ -6,6 +6,7 @@ public interface RecyclerViewClickInterface {
     void onPlayClick(int position);
     void onStopClick(int position);
     void onItemClick(int position);
+    void onItemEdit(int position);
 
 
 }

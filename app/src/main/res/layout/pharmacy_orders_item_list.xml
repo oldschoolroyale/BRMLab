@@ -33,7 +33,9 @@
                 android:layout_width="@dimen/pharmacy_edit_60dp"
                 android:layout_height="@dimen/pharmacy_edit_40dp"
                 android:id="@+id/pharmacy_orders_medications_edit_text"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="@dimen/margin15dp"
+                android:paddingBottom="@dimen/margin5dp"/>
 
         </RelativeLayout>
     </LinearLayout>
