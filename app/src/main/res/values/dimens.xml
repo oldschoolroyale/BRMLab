@@ -15,4 +15,6 @@
     <dimen name="margin8dp">8dp</dimen>
     <dimen name="margin5dp">5dp</dimen>
     <dimen name="margin15dp">15dp</dimen>
+    <dimen name="margin10dp">10dp</dimen>
+    <dimen name="text25sp">25sp</dimen>
 </resources>

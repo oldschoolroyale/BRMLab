@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name=".activities.startActivity.App"
@@ -18,10 +19,21 @@
         android:roundIcon="@mipmap/ic_brmlab"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activities.startActivity.ProfileActivity"></activity>
+        <activity android:name=".activities.startActivity.UpdateActivityCheck"></activity>
+        <activity android:name=".activities.OrderActivity" />
+        <activity android:name=".activities.startActivity.ProfileActivity" />
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.PharmacyActivity" />
         <activity android:name=".activities.DoctorInformation" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepath" />
+        </provider>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -45,5 +57,7 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
     </application>
+
+
 
 </manifest>

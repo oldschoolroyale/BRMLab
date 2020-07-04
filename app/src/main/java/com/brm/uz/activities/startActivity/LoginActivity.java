@@ -174,7 +174,7 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     private void sendUserToHome() {
-        Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent homeIntent = new Intent(LoginActivity.this, UpdateActivityCheck.class);
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

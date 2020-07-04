@@ -49,9 +49,9 @@ public class PharmacyOrdersAdapter extends RecyclerView.Adapter<PharmacyOrdersAd
 
 
     class PharmacyViewHolder extends RecyclerView.ViewHolder {
-        View view;
-        TextView medicationsText;
-        EditText medicationsEdit;
+        private View view;
+        private TextView medicationsText;
+        private EditText medicationsEdit;
         public MyCustomEditTextListener myCustomEditTextListener;
         public PharmacyViewHolder(@NonNull View itemView, MyCustomEditTextListener myCustomEditTextListener) {
             super(itemView);

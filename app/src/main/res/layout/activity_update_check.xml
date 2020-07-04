@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.startActivity.UpdateActivityCheck"
+    android:background="@color/blue_dark">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_update_check_gif"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin5dp"
+        />
+
+
+    <TextView
+        android:id="@+id/activity_update_check_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/update_text"
+        android:layout_above="@id/activity_update_check_circular_progress_bar"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/margin25dp"
+        android:textSize="@dimen/text25sp"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/nunito_bold"
+        />
+
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/activity_update_check_circular_progress_bar"
+        android:layout_width="@dimen/circular40dp"
+        android:layout_height="@dimen/circular40dp"
+        app:cpv_animAutostart="true"
+        app:cpv_indeterminate="true"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>
