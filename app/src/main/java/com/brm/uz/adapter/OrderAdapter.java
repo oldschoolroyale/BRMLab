@@ -1,5 +1,6 @@
 package com.brm.uz.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,10 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.brm.uz.R;
 import com.brm.uz.models.PharmacyNewOrdersPOJO;
+import com.brm.uz.viewHolder.OrdersViewHolder;
 
 import java.util.List;
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrdersViewHolder> {
+public class OrderAdapter extends RecyclerView.Adapter<OrdersViewHolder> {
     private Context context;
     private List<PharmacyNewOrdersPOJO> ordersList;
 
@@ -31,10 +33,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrdersViewHo
     public OrdersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.pharmacy_new_orders_item_list, null);
-        OrderAdapter.OrdersViewHolder holder = new OrderAdapter.OrdersViewHolder (view, new OrdersEditListener());
+        OrdersViewHolder holder = new OrdersViewHolder (view, new OrdersEditListener());
         return holder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull OrdersViewHolder holder, int position) {
         holder.ordersEditListener.updatePosition(holder.getAdapterPosition());
@@ -51,26 +54,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrdersViewHo
         return ordersList.size();
     }
 
-    public static class OrdersViewHolder extends RecyclerView.ViewHolder {
-        private View view;
-        private TextView medicationsText,  stockText, fullTextView, halfTextView, semiTextView;
-        private EditText editText;
-        private OrdersEditListener ordersEditListener;
-        public OrdersViewHolder(@NonNull View itemView, OrdersEditListener ordersEditListener) {
-            super(itemView);
-            view = itemView;
-            medicationsText = view.findViewById(R.id.orders_medications_name_text_view);
-            editText = view.findViewById(R.id.orders_medications_edit_text);
-            stockText = view.findViewById(R.id.orders_stock_text_view);
-            fullTextView = view.findViewById(R.id.orders_full_buy);
-            halfTextView= view.findViewById(R.id.orders_half_buy);
-            semiTextView = view.findViewById(R.id.orders_semi_buy);
-            this.ordersEditListener = ordersEditListener;
-            this.editText.addTextChangedListener(ordersEditListener);
-        }
-    }
 
-    private class OrdersEditListener implements TextWatcher {
+    public class OrdersEditListener implements TextWatcher {
         private int position;
 
         private void updatePosition(int position) {

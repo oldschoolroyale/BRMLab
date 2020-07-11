@@ -145,7 +145,6 @@ public class OtpActivity extends AppCompatActivity {
             Intent homeIntent = new Intent(OtpActivity.this, UpdateActivityCheck.class);
             homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
             startActivity(homeIntent);
             finish();
         }

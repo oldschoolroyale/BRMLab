@@ -44,6 +44,14 @@
     <string name="comment">Коментарий</string>
     <string name="ready">Готово</string>
     <string name="permission_text">Нажмите готово, после выдачи всех необходимых прав для приложения \n (Если ничего не всплывает, включите разрешения в настройках)</string>
+    <string name="stock">Остаток</string>
+    <string name="order">Бронь</string>
+    <string name="category">Категория</string>
+    <string name="extra_information">Дополнительная информация</string>
+    <string name="choose">Выбрать</string>
+    <string name="medication">Препарат</string>
+    <string name="comments">Коментарии к визиту</string>
+    <string name="free_comment">Коментарии в свободной форме</string>
 
 
     <string-array name="categoryOfMission">
@@ -55,11 +63,7 @@
         <item>Активный</item>
         <item>Не активный</item>
     </string-array>
-    <string-array name="test">
-        <item>Item1</item>
-        <item>Item2</item>
-        <item>Item3</item>
-    </string-array>
+
     <string-array name="tashSirdarya">
         <item>Ташкентская область</item>
         <item>Сырдаринская область</item>

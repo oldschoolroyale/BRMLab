@@ -41,7 +41,7 @@ import java.util.Arrays;
 
 public class DoctorInformation extends AppCompatActivity implements View.OnClickListener {
     private Button okButton, pickButton, categoryButton;
-    boolean checkedItems[];
+    private boolean checkedItems[];
     private ArrayList<Integer> mUserItems = new ArrayList<>();
     private CircularProgressView loading;
     private String[] listItem, words;
@@ -60,7 +60,8 @@ public class DoctorInformation extends AppCompatActivity implements View.OnClick
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String current_user = user.getUid();
 
-        chooseString = "null";
+        chooseString = "";
+
 
         DatabaseReference medReference = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
         medReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -139,7 +140,7 @@ public class DoctorInformation extends AppCompatActivity implements View.OnClick
                         item = item + ", ";
                     }
                 }
-                chooseString = item;
+                chooseString = chooseString + item;
             }
         });
 

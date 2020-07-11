@@ -1,17 +1,24 @@
 package com.brm.uz.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brm.uz.R;
+import com.brm.uz.activities.startActivity.UpdateActivityCheck;
 import com.brm.uz.adapter.OrderAdapter;
+import com.brm.uz.helper.UpdateHelper;
 import com.brm.uz.models.PharmacyNewOrdersPOJO;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.google.firebase.database.DataSnapshot;
@@ -30,8 +37,10 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
     private RecyclerView recyclerView;
     private ArrayList<PharmacyNewOrdersPOJO> secondList;
     private RadioGroup radioGroup;
-    private TextView finalPriceTextView;
+    private RadioButton radioButton;
     private DatabaseReference reference;
+    private int radioId;
+    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +53,10 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
     private void startElements() {
         loading = findViewById(R.id.activity_order_circle_progress_bar);
-        loading.setVisibility(View.VISIBLE);
+        linearLayout = findViewById(R.id.activity_order_main_linear_layout);
+        inVisible();
         recyclerView = findViewById(R.id.activity_order_new_order_recycler_view);
         radioGroup = findViewById(R.id.activity_order_radio_group);
-        finalPriceTextView = findViewById(R.id.activity_order_final_price);
 
         secondList = new ArrayList<>();
 
@@ -57,9 +66,15 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
     }
 
     void cursor(){
-        for (int i = 0; i < words.length; i++) {
-            newOrder(words[i]);
-        }
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < words.length; i++) {
+                    newOrder(words[i]);
+                }
+                visible();
+            }
+        }, 1000);
     }
 
     private void newOrder(String type){
@@ -74,7 +89,6 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
                 newAdapter = new OrderAdapter(getApplicationContext(), secondList);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 recyclerView.setAdapter(newAdapter);
-                loading.setVisibility(View.GONE);
             }
 
             @Override
@@ -88,30 +102,35 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
         switch (radioGroup.getCheckedRadioButtonId()){
             case R.id.activity_order_radio_100:
                 finalPrice = 0;
+                radioId = radioGroup.getCheckedRadioButtonId();
                 for (int i = 0; i < secondList.size(); i++) {
                     if (secondList.get(i).getQuantity() > 0){
                         finalPrice = finalPrice + (secondList.get(i).getFull() * secondList.get(i).getQuantity());
+                        secondList.get(i).setPrice(secondList.get(i).getFull());
                     }
                 }
-                finalPriceTextView.setText("Общая стоимость при предоплате 100% : "+finalPrice);
                 break;
             case R.id.activity_order_radio_50:
                 finalPrice = 0;
+                radioId = radioGroup.getCheckedRadioButtonId();
                 for (int i = 0; i < secondList.size(); i++) {
                     if (secondList.get(i).getQuantity() > 0){
                         finalPrice = finalPrice + (secondList.get(i).getHalf() * secondList.get(i).getQuantity());
+                        secondList.get(i).setPrice(secondList.get(i).getHalf());
                     }
                 }
-                finalPriceTextView.setText("Общая стоимость при предоплате 50% : "+finalPrice);
+                finalPrice = finalPrice / 2;
                 break;
             case R.id.activity_order_radio_25:
                 finalPrice = 0;
+                radioId = radioGroup.getCheckedRadioButtonId();
                 for (int i = 0; i < secondList.size(); i++) {
                     if (secondList.get(i).getQuantity() > 0){
                         finalPrice = finalPrice + (secondList.get(i).getSemi() * secondList.get(i).getQuantity());
+                        secondList.get(i).setPrice(secondList.get(i).getSemi());
                     }
                 }
-                finalPriceTextView.setText("Общая стоимость при предоплате 25% : "+finalPrice);
+                finalPrice = finalPrice * 0.25;
 
         }
     }
@@ -124,29 +143,90 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
             if (secondList.get(i).getQuantity() != 0){
                 reference.child("items").child("item" + i).child("name").setValue(secondList.get(i).getName());
                 reference.child("items").child("item" + i).child("quantity").setValue(secondList.get(i).getQuantity());
-                reference.child("price").setValue(finalPrice);
+                reference.child("items").child("item" + i).child("price").setValue(secondList.get(i).getPrice());
+                reference.child("final_price").setValue(finalPrice);
                 reference.child("title").setValue(getIntent().getStringExtra("title"));
                 reference.child("address").setValue(getIntent().getStringExtra("address"));
+                reference.child("type").setValue(radioButton.getText());
             }
         }
+        Toast.makeText(getApplicationContext(), "Заказ успешно отправлен!", Toast.LENGTH_LONG).show();
         finish();
     }
 
     void updateReference(){
-        reference = FirebaseDatabase.getInstance().getReference().child("Medications");
-        for (int j = 0; j < secondList.size(); j++) {
-            if (secondList.get(j).getQuantity() != 0){
-                reference.child(secondList.get(j).getParent()).child(secondList.get(j).getId()).child("stock").setValue(secondList.get(j).getStock() - secondList.get(j).getQuantity());
+            inVisible();
+            boolean find = false;
+            for (int i = 0; i < secondList.size(); i++) {
+                if (secondList.get(i).getQuantity() != 0 && secondList.get(i).getQuantity() > secondList.get(i).getStock()){
+                    find = true;
+                    break;
+                }
             }
-        }
-        newOrderSend();
+            if (find){
+                Toast.makeText(getApplicationContext(), "В заказе есть пунк превышающий количество из склада!", Toast.LENGTH_LONG).show();
+                visible();
+            }
+            else {
+                reference = FirebaseDatabase.getInstance().getReference().child("Medications");
+                for (int j = 0; j < secondList.size(); j++) {
+                    if (secondList.get(j).getQuantity() != 0){
+                        reference.child(secondList.get(j).getParent()).child(secondList.get(j).getId()).child("stock").setValue(secondList.get(j).getStock() - secondList.get(j).getQuantity());
+                    }
+                }
+                newOrderSend();
+            }
+    }
+
+    void sendDialog(){
+        visible();
+        DialogInterface.OnClickListener sendDialog = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        updateReference();
+                        break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+        builder.setMessage("Финальная цена : " + finalPrice + "\n Осуществить заказ?").setPositiveButton("Да", sendDialog)
+                .setNegativeButton("Нет", sendDialog)
+                .show();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.activity_order_button_add:
-                updateReference();
+                if (radioId == 0){
+                    Toast.makeText(getApplicationContext(), "Не выбрана категория предоплаты!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    inVisible();
+                    new android.os.Handler().postDelayed(
+                            new Runnable() {
+                                public void run() {
+                                    radioButton = findViewById(radioId);
+                                    radioButton.callOnClick();
+                                    sendDialog();
+                                }
+                            },
+                            2000);
+                }
+
         }
+    }
+
+    void visible(){
+        loading.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.VISIBLE);
+    }
+
+    void inVisible(){
+        loading.setVisibility(View.VISIBLE);
+        linearLayout.setVisibility(View.GONE);
     }
 }

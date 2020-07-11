@@ -1,4 +1,4 @@
-package com.brm.uz.models;
+package com.brm.uz.helper;
 
 import android.content.Intent;
 import android.location.Address;

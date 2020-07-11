@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingBottom="10dp"
+    android:paddingBottom="@dimen/margin10dp"
     android:background="@android:color/transparent">
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,12 +18,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="4"
-        android:text="08 AM"
         android:fontFamily="@font/open_sans_semibold"
         android:gravity="center_horizontal"
         android:textColor="@color/colorSecondGrey"
         android:textStyle="bold"
-        android:textSize="15sp"/>
+        android:textSize="@dimen/text15sp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,21 +39,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="#FFFAC3"
+                android:background="@color/ping_lovando"
                 android:id="@+id/card_view_ll1"
                 >
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
+                    android:layout_marginTop="@dimen/margin10dp"
+                    android:layout_marginLeft="@dimen/margin10dp"
+                    android:layout_marginRight="@dimen/margin10dp">
                     <TextView
                         android:id="@+id/card_view_missions_doctor_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:text="Рахимжонов Шохсултон"
                         android:textColor="@color/textDefault"
                         android:fontFamily="@font/nunito_semibold"
                         />
@@ -66,14 +64,6 @@
                         android:id="@+id/card_view_delete"
 
                         />
-                    <ImageView
-                        android:layout_width="@dimen/margin20dp"
-                        android:layout_height="@dimen/margin20dp"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_edit"
-                        android:id="@+id/card_view_edit"
-                        android:visibility="gone"
-                        />
 
                 </RelativeLayout>
                 <TextView
@@ -81,48 +71,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:text="Улица банокатий, 198-68"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="13sp"
+                    android:layout_marginLeft="@dimen/margin10dp"
+                    android:textSize="@dimen/text12sp"
                     android:textColor="@color/xaki"
                     android:fontFamily="@font/nunito_semibold"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/margin10dp"
                     android:maxLines="1"
-                    android:text="Визит к врачу"
                     android:textColor="@color/xaki"
-                    android:textSize="12sp"
-                    android:layout_marginTop="5dp"
+                    android:textSize="@dimen/text12sp"
+                    android:layout_marginTop="@dimen/margin5dp"
                     android:fontFamily="@font/nunito_semibold"
                     android:id="@+id/card_view_missions_type_textView"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/card_view_medications"
-                    android:textSize="13dp"
-                    android:fontFamily="@font/nunito_semibold"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/xaki" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="@color/xaki"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="@dimen/margin10dp"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
+                    android:layout_margin="@dimen/margin10dp">
                     <TextView
                         android:id="@+id/fragment_mission_card_view_visit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text12sp"
                         android:textColor="@color/colorGrey"
                         android:textStyle="bold"
-                        android:text="Визит не окончен"
                         android:layout_alignParentStart="true"
                         android:fontFamily="@font/nunito_semibold"
                         />
@@ -131,23 +109,14 @@
                         android:layout_height="@dimen/margin20dp"
                         android:src="@drawable/ic_play"
                         android:id="@+id/card_view_button_play"
-                        android:layout_marginRight="20dp"
-                        android:layout_toLeftOf="@+id/card_view_button_stop"
-                        />
-                    <ImageView
-                        android:layout_width="@dimen/margin20dp"
-                        android:layout_height="@dimen/margin20dp"
-                        android:src="@drawable/ic_stop"
                         android:layout_alignParentRight="true"
-                        android:id="@+id/card_view_button_stop"
 
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3:28:20"
                         android:id="@+id/card_view_time_start"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="@dimen/margin20dp"
                         android:layout_toLeftOf="@+id/card_view_time_end"
                         android:visibility="gone"
                         android:fontFamily="@font/open_sans_semibold"/>
@@ -156,7 +125,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:id="@+id/card_view_time_end"
-                        android:text="3:29:20"
                         android:visibility="gone"
                         android:fontFamily="@font/open_sans_semibold"
                         />

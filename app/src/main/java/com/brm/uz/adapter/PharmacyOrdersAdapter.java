@@ -14,10 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.brm.uz.models.PharmacyOrdersPOJO;
 import com.brm.uz.R;
+import com.brm.uz.viewHolder.PharmacyViewHolder;
 
 import java.util.List;
 
-public class PharmacyOrdersAdapter extends RecyclerView.Adapter<PharmacyOrdersAdapter.PharmacyViewHolder> {
+public class PharmacyOrdersAdapter extends RecyclerView.Adapter<PharmacyViewHolder> {
     private Context context;
     private List<PharmacyOrdersPOJO> pharmacyOrdersPOJOS;
 
@@ -32,7 +33,7 @@ public class PharmacyOrdersAdapter extends RecyclerView.Adapter<PharmacyOrdersAd
     public PharmacyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.pharmacy_orders_item_list, null);
-        PharmacyOrdersAdapter.PharmacyViewHolder holder = new PharmacyOrdersAdapter.PharmacyViewHolder (view, new MyCustomEditTextListener());
+        PharmacyViewHolder holder = new PharmacyViewHolder (view, new MyCustomEditTextListener());
         return holder;
     }
 
@@ -48,22 +49,7 @@ public class PharmacyOrdersAdapter extends RecyclerView.Adapter<PharmacyOrdersAd
     }
 
 
-    class PharmacyViewHolder extends RecyclerView.ViewHolder {
-        private View view;
-        private TextView medicationsText;
-        private EditText medicationsEdit;
-        public MyCustomEditTextListener myCustomEditTextListener;
-        public PharmacyViewHolder(@NonNull View itemView, MyCustomEditTextListener myCustomEditTextListener) {
-            super(itemView);
-            view = itemView;
-            medicationsText = view.findViewById(R.id.pharmacy_orders_medications_name_text_view);
-            medicationsEdit = view.findViewById(R.id.pharmacy_orders_medications_edit_text);
-            this.myCustomEditTextListener = myCustomEditTextListener;
-            this.medicationsEdit.addTextChangedListener(myCustomEditTextListener);
-        }
-    }
-
-    private class MyCustomEditTextListener implements TextWatcher {
+    public class MyCustomEditTextListener implements TextWatcher {
         private int position;
 
         public void updatePosition(int position) {

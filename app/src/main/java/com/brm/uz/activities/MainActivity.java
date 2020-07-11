@@ -1,7 +1,11 @@
 package com.brm.uz.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -57,14 +61,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
 
+        TextView versionText = findViewById(R.id.app_bar_main_version_name);
+
+        versionText.setText("BRMLab "+connectionCheck());
+
         NavController navController = Navigation.findNavController(this, R.id.activity_main_fragment);
         NavigationUI .setupWithNavController(navigationView, navController);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String current_user = user.getUid();
-        DatabaseReference version = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
-        version.child("version").setValue("1.35");
+
+
         reference = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
+        reference.child("version").setValue(versionCheck());
 
         findViewById(R.id.app_bar_menu_button).setOnClickListener(this);
         findViewById(R.id.doctor_fab_btn).setOnClickListener(this);
@@ -73,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         updateNav();
     }
-
 
     @Override
     public void onClick(View v) {
@@ -85,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.doctor_fab_btn:
                 if (!town.equals("null") && !region.equals("null")){
                     Intent intentDoctor = new Intent(this, DoctorAdd.class);
+                    intentDoctor.putExtra("town", town);
+                    intentDoctor.putExtra("region", region);
                     startActivity(intentDoctor);
                 }
                 else {Toast.makeText(getApplicationContext(), "Администратор пока не назначал вам область работы", Toast.LENGTH_LONG).show();}
@@ -92,6 +102,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.pharmacy_fab_btn:
                 if (!town.equals("null") && !region.equals("null")) {
                     Intent intentPharmacy = new Intent(this, PharmacyAdd.class);
+                    intentPharmacy.putExtra("town", town);
+                    intentPharmacy.putExtra("region", region);
                     startActivity(intentPharmacy);
                 }
                 else {Toast.makeText(getApplicationContext(), "Администратор пока не назначал вам область работы", Toast.LENGTH_LONG).show();}
@@ -120,12 +132,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          reference.addValueEventListener(new ValueEventListener() {
              @Override
              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                 town = dataSnapshot.child("town_doctor").getValue().toString();
-                 region = dataSnapshot.child("region").getValue().toString();
-                     textView.setText(dataSnapshot.child("name").getValue().toString());
-                     if (!dataSnapshot.child("image").getValue().toString().equals("default"))
+                 town = "" + dataSnapshot.child("town").getValue();
+                 region = "" + dataSnapshot.child("region").getValue();
+                     textView.setText("" + dataSnapshot.child("name").getValue());
+                     String test = "" + dataSnapshot.child("image").getValue();
+                     if (!test.equals("default") && !test.equals("null"))
                      {
                          Picasso.with(MainActivity.this).load(dataSnapshot.child("image").getValue().toString()).into(circleImageView);
+                     }
+                     else {
+                         circleImageView.setBackgroundResource(R.drawable.avatar);
                      }
 
              }
@@ -212,7 +228,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return randomStringBuilder.toString();
     }
 
+    public static boolean isNetworkAvailable(Context con) {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) con
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
+            if (networkInfo != null && networkInfo.isConnected()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
+    private String connectionCheck(){
+        if (isNetworkAvailable(MainActivity.this)){
+           return versionCheck();
+        }
+            return "Нет соеденения";
+    }
 
+    private String versionCheck(){
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            return pInfo.versionName;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return "404";
+    }
 }

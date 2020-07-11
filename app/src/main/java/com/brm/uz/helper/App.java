@@ -29,7 +29,7 @@ public class App extends Application {
         defaultValue.put(UpdateHelper.KEY_UPDATE_TEXT, "-Исправлены ошибки системы");
 
         remoteConfig.setDefaults(defaultValue);
-        remoteConfig.fetch(1)
+        remoteConfig.fetch(2)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

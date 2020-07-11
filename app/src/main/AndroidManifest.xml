@@ -40,7 +40,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
 
-        <activity android:name=".models.MapSearch" />
+        <activity android:name=".helper.MapSearch" />
         <activity android:name=".activities.addActivities.PharmacyAdd" />
         <activity android:name=".dataList.PharmacyList" />
         <activity android:name=".activities.MainActivity" />

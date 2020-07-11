@@ -82,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     reference.child("name").setValue(nameEdit.getText().toString() + " " + surNameEdit.getText().toString());
                     reference.child("image").setValue(download_url);
 
-                    Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                    Intent intent = new Intent(ProfileActivity.this, PermissionActivity.class);
                     startActivity(intent);
                     finish();
                 }

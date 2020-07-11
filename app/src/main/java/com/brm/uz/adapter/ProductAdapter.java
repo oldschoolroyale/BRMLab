@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.brm.uz.R;
@@ -60,33 +61,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         if (holder.adapterType.getText().equals("Визит к врачу")){
             holder.linearLayout.setBackgroundColor(holder.view.getResources().getColor(R.color.blue_elipse));
         }
-        else {
-            holder.linearLayout.setBackgroundColor(holder.view.getResources().getColor(R.color.ping_lovando));
-        }
         if (!productList.get(position).getTimeStart().equals("null") && productList.get(position).getTimeEnd().equals("null")){
-            holder.playImage.setVisibility(View.GONE);
             holder.linearLayout.setBackgroundColor(holder.view.getResources().getColor(R.color.light_green));
-            holder.deleteImage.setVisibility(View.GONE);
-            holder.stopImage.setVisibility(View.VISIBLE);
-            holder.timeEnd.setVisibility(View.GONE);
             holder.timeStart.setVisibility(View.GONE);
-            holder.view.setClickable(false);
-        }
-        if (productList.get(position).getTimeStart().equals("null") && productList.get(position).getTimeEnd().equals("null")){
+            holder.timeEnd.setVisibility(View.GONE);
             holder.playImage.setVisibility(View.VISIBLE);
-            holder.deleteImage.setVisibility(View.VISIBLE);
-            holder.stopImage.setVisibility(View.VISIBLE);
-            holder.timeEnd.setVisibility(View.GONE);
-            holder.timeStart.setVisibility(View.GONE);
+            holder.playImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_stop));
+            holder.deleteImage.setVisibility(View.GONE);
         }
         if (productList.get(position).getVisit().equals("Визит окончен")){
             holder.visitName.setTextColor(Color.parseColor("#d22136"));
             holder.playImage.setVisibility(View.GONE);
-            holder.stopImage.setVisibility(View.GONE);
             holder.deleteImage.setVisibility(View.GONE);
             holder.timeStart.setVisibility(View.VISIBLE);
             holder.timeEnd.setVisibility(View.VISIBLE);
-            holder.editImage.setVisibility(View.VISIBLE);
+            if (!productList.get(position).getType().equals("Визит в аптеку")){
+                holder.deleteImage.setVisibility(View.VISIBLE);
+                holder.deleteImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_edit));
+            }
         }
     }
 
@@ -96,7 +88,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     class ProductViewHolder extends RecyclerView.ViewHolder{
-        ImageView playImage, stopImage, deleteImage, editImage;
+        ImageView playImage, deleteImage;
         TextView adapterType, adapterAddress, adapterName, visitName, timeText, timeStart, timeEnd;
         LinearLayout linearLayout;
         View view;
@@ -111,22 +103,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             timeText = itemView.findViewById(R.id.card_view_add_time);
             linearLayout = view.findViewById(R.id.card_view_ll1);
             playImage = itemView.findViewById(R.id.card_view_button_play);
-            stopImage = itemView.findViewById(R.id.card_view_button_stop);
+
             deleteImage = itemView.findViewById(R.id.card_view_delete);
             timeStart = itemView.findViewById(R.id.card_view_time_start);
             timeEnd = itemView.findViewById(R.id.card_view_time_end);
-            editImage = itemView.findViewById(R.id.card_view_edit);
 
             playImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    recyclerViewClickInterface.onPlayClick(getAdapterPosition());
-                }
-            });
-            stopImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    recyclerViewClickInterface.onStopClick(getAdapterPosition());
+                    recyclerViewClickInterface.onItemClick(getAdapterPosition());
                 }
             });
             deleteImage.setOnClickListener(new View.OnClickListener() {
@@ -139,12 +124,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 @Override
                 public void onClick(View v) {
                     recyclerViewClickInterface.onItemClick(getAdapterPosition());
-                }
-            });
-            editImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    recyclerViewClickInterface.onItemEdit(getAdapterPosition());
                 }
             });
         }

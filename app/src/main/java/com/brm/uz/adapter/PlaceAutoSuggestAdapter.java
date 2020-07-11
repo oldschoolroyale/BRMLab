@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import com.brm.uz.models.PlaceApi;
+import com.brm.uz.helper.PlaceApi;
 
 import java.util.ArrayList;
 

@@ -70,7 +70,7 @@ public class PermissionActivity extends AppCompatActivity {
 
     private void goHome(){
         if (checkPermissionFromDevice()){
-            Intent sentHome = new Intent(PermissionActivity.this, MainActivity.class);
+            Intent sentHome = new Intent(PermissionActivity.this, UpdateActivityCheck.class);
             sentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             sentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(sentHome);

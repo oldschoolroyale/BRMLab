@@ -1,33 +1,25 @@
 package com.brm.uz.fragments;
 
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,13 +46,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Objects;
 
 
 public class MissionFragment extends Fragment implements DatePickerDialog.OnDateSetListener, RecyclerViewClickInterface  {
 
 
-    private String timeCheck, timeStampYear, timeStampMonth, timeStampDay, current_user, strDate, medicationsIntent;
+    private String timeCheck, timeStampYear, timeStampMonth, timeStampDay, current_user, strDate, medicationsIntent, orderTypeText, orderPriceText;
     private Double lonDBL, latDBL;
     private int bonusInt;
 
@@ -91,11 +84,12 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
         current_user = user.getUid();
 
         bonus = FirebaseDatabase.getInstance().getReference().child("Account").child(current_user);
+        bonusInt = 0;
 
         linearLayout = view.findViewById(R.id.fragment_mission_ll1);
 
         dateText = view.findViewById(R.id.fragment_mission_date_text);
-        dateText.setText( new SimpleDateFormat("dd.M.yyyy").format(Calendar.getInstance().getTime()));
+        dateText.setText( new SimpleDateFormat("d.M.yyyy").format(Calendar.getInstance().getTime()));
 
        ImageView imageView = view.findViewById(R.id.fragment_mission_calendar);
        imageView.setOnClickListener(new View.OnClickListener() {
@@ -163,8 +157,13 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
         bonus.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bonusInt = Integer.parseInt(dataSnapshot.child("bonus").getValue().toString());
-                medicationsIntent = dataSnapshot.child("medications").getValue().toString();
+                String test = "" + dataSnapshot.child("bonus").getValue();
+                if (!test.equals("null"))
+                {
+                    bonusInt = Integer.parseInt("" + dataSnapshot.child("bonus").getValue());
+                }
+
+                medicationsIntent = "" + dataSnapshot.child("medications").getValue();
             }
 
             @Override
@@ -174,7 +173,6 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
         });
 
     }
-
 
     private void getLocationAndTime() {
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -197,6 +195,7 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
         timeStampYear = "" + year;
         timeStampDay = "" + dayOfMonth;
         timeStampMonth = "" + (monthOfYear + 1);
+        timeCheck = timeStampDay+timeStampMonth+timeStampYear;
 
         String dateShow = dayOfMonth + "." + (monthOfYear + 1) + "." + year;
         dateText.setText(dateShow);
@@ -205,93 +204,117 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
 
     @Override
     public void onDeleteClick(int position) {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        reference = FirebaseDatabase.getInstance().getReference().child("Notes").child(current_user).child(timeStampYear).child(timeStampMonth).child(timeStampDay).child(productList.get(position).getId());
-                        reference.removeValue();
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
-                        break;
-                }
-            }
-        };
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.delete_note).setPositiveButton("Да", dialogClickListener)
-                .setNegativeButton("Нет", dialogClickListener).show();
-    }
-
-    @Override
-    public void onPlayClick(int position) {
-            if (timeCheck.equals(new SimpleDateFormat("dMyyyy").format(Calendar.getInstance().getTime()))){
-                DialogInterface.OnClickListener playClickListener = new DialogInterface.OnClickListener() {
+        if (timeCheck.equals(new SimpleDateFormat("dMyyyy").format(Calendar.getInstance().getTime()))) {
+            if (productList.get(position).getVisit().equals("Визит окончен")) {
+                extraInformation(position);
+            } else {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
-                                fusedLocationProviderClient = new FusedLocationProviderClient(getActivity());
-                                getLocationAndTime();
-                                productList.get(position).setTimeStart(strDate);
-                                adapter.notifyDataSetChanged();
+                                reference = FirebaseDatabase.getInstance().getReference().child("Notes").child(current_user).
+                                        child(timeStampYear).child(timeStampMonth).child(timeStampDay).child(productList.get(position).getId());
+                                reference.removeValue();
                                 break;
-
                             case DialogInterface.BUTTON_NEGATIVE:
                                 //No button clicked
                                 break;
                         }
                     }
                 };
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(R.string.alert_dialog_start_message).setPositiveButton("Да", playClickListener)
-                        .setNegativeButton("Нет", playClickListener);
-                if (!getActivity().isFinishing()){
-                    builder.show();
-                }
+                builder.setMessage(R.string.delete_note).setPositiveButton("Да", dialogClickListener)
+                        .setNegativeButton("Нет", dialogClickListener).show();
             }
-
-            else {
-                Toast.makeText(getActivity(), "Визит можно выполнить только в запланированный день", Toast.LENGTH_LONG).show();
-            }
-
+        }
+        else {
+            Toast.makeText(getActivity(), "Изменения возможно осуществить только в назначенный день!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
-    public void onStopClick(int position) {
+    public void onItemClick(int position) {
+        if (timeCheck.equals(new SimpleDateFormat("dMyyyy").format(Calendar.getInstance().getTime()))){
+            if (productList.get(position).getTimeStart().equals("null") && productList.get(position).getTimeStart().equals("null")){
+                doStart(position);
+            }
+            if (!productList.get(position).getTimeStart().equals("null") && productList.get(position).getTimeEnd().equals("null")){
+                doStop(position);
+            }
+            if (productList.get(position).getVisit().equals("Визит окончен")){
+                loading.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                new android.os.Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (productList.get(position).getType().equals("Визит к врачу")){
+                            commentDialog(position,  true);
+                        }
+                        if (productList.get(position).getType().equals("Визит в аптеку")){
+                            getOrderText(position);
+                        }
+                    }
+                }, 1500);
+
+            }
+        }
+        else {
+            Toast.makeText(getActivity(), "Визит возможно осуществить только в назначенный день!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void doStart(int position){
+        DialogInterface.OnClickListener playClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        fusedLocationProviderClient = new FusedLocationProviderClient(getActivity());
+                        getLocationAndTime();
+                        productList.get(position).setTimeStart(strDate);
+                        adapter.notifyDataSetChanged();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.alert_dialog_start_message).setPositiveButton("Да", playClickListener)
+                .setNegativeButton("Нет", playClickListener);
+        builder.show();
+    }
+
+    private void doStop(int position){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Notes").child(current_user).child(timeStampYear).child(timeStampMonth).child(timeStampDay).child(productList.get(position).getId());
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!productList.get(position).getTimeStart().equals("null")){
-                    DialogInterface.OnClickListener stopClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    getLocationAndTime();
-                                    reference.child("lon").setValue(lonDBL);
-                                    reference.child("lat").setValue(latDBL);
-                                    reference.child("time_start").setValue(strDate);
-                                    reference.child("time_end").setValue(strDate);
-                                    reference.child("visit").setValue("Визит окончен");
-                                    extraInformation(position);
-                                    break;
-                                case DialogInterface.BUTTON_NEGATIVE:
 
-
-                            }
+                DialogInterface.OnClickListener stopClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                getLocationAndTime();
+                                reference.child("lon").setValue(lonDBL);
+                                reference.child("lat").setValue(latDBL);
+                                reference.child("time_start").setValue(productList.get(position).getTimeStart());
+                                reference.child("time_end").setValue(strDate);
+                                reference.child("visit").setValue("Визит окончен");
+                                extraInformation(position);
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
                         }
-                    };
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("Окончить визит?").setPositiveButton("Да", stopClickListener).setNegativeButton("Нет", stopClickListener);
-                    if (!getActivity().isFinishing()){
-                        builder.show();
                     }
-                }
-                else {Toast.makeText(getActivity(), "Этот визит еще не начат!", Toast.LENGTH_LONG).show();}
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Окончить визит?").setPositiveButton("Да", stopClickListener).setNegativeButton("Нет", stopClickListener);
+                builder.show();
             }
 
             @Override
@@ -303,34 +326,35 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
         bonus.child("bonus").setValue(bonusInt);
     }
 
-    @Override
-    public void onItemClick(int position) {
-        if (productList.get(position).getType().equals("Визит к врачу") && productList.get(position).getVisit().equals("Визит окончен"))
-        {
-            String[] category = productList.get(position).getMedications().split(", ");
-            commentDialog(position, category);
-        }
-    }
-
-    @Override
-    public void onItemEdit(int position) {
-        if (productList.get(position).getType().equals("Визит к врачу")){
-            extraInformation(position);
-        }
-    }
-
-    private void commentDialog(int position, String[] category){
+    private void commentDialog(int position,  boolean check){
+        View view;
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.nav_alert_comment, null);
+        if (check) {
+            view = LayoutInflater.from(getActivity()).inflate(R.layout.nav_alert_doctor, null);
+            ListView simpleList = view.findViewById(R.id.nav_alert_comment_medications_list_view);
+            TextView commentText = view.findViewById(R.id.nav_alert_comment_text_view);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_list_item_1, productList.get(position).getMedications().split(", "));
+            commentText.setText(productList.get(position).getComment());
+            simpleList.setAdapter(adapter);
+        }
+        else {
+            view = LayoutInflater.from(getActivity()).inflate(R.layout.nav_alert_pharmacy, null);
+            ListView simpleList = view.findViewById(R.id.nav_alert_pharmacy_list_view);
+            ListView orderList = view.findViewById(R.id.nav_alert_pharmacy_order_list_view);
+            TextView typeText = view.findViewById(R.id.nav_alert_pharmacy_type);
+            TextView finalPriceText = view.findViewById(R.id.nav_alert_pharmacy_final_price);
 
-        ListView simpleList = view.findViewById(R.id.nav_alert_comment_medications_list_view);
-        TextView commentText = view.findViewById(R.id.nav_alert_comment_text_view);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, category);
+            typeText.setText(orderTypeText);
+            finalPriceText.setText(orderPriceText);
 
-        commentText.setText(productList.get(position).getComment());
-        simpleList.setAdapter(adapter);
-
+            SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), getPharmacy(position),
+                    R.layout.item_stock, new String[]{"name", "quantity"}, new int[]{R.id.item_stock_text_view_1, R.id.item_stock_text_view_2});
+            simpleList.setAdapter(simpleAdapter);
+            SimpleAdapter orderAdapter = new SimpleAdapter(getActivity(), getOrder(position), R.layout.item_order, new String[]{"name", "quantity", "price"},
+                    new int[]{R.id.item_order_text_view1, R.id.item_order_text_view2, R.id.item_order_text_view3});
+            orderList.setAdapter(orderAdapter);
+        }
         builder
                 .setView(view)
                 .setPositiveButton("Ок", new DialogInterface.OnClickListener() {
@@ -341,7 +365,8 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
                 .setCancelable(true);
         androidx.appcompat.app.AlertDialog dialog = builder.create();
         dialog.show();
-
+        recyclerView.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.GONE);
     }
 
     private void extraInformation(int position) {
@@ -375,5 +400,74 @@ public class MissionFragment extends Fragment implements DatePickerDialog.OnDate
 
     }
 
+    private ArrayList<HashMap<String, String>> getPharmacy(int position){
+        ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Notes").child(current_user)
+                .child(timeStampYear).child(timeStampMonth).child(timeStampDay).child(productList.get(position).getId()).child("stock");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                HashMap<String, String> map;
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    map = new HashMap<>();
+                    map.put("name", "" + dataSnapshot1.child("name").getValue());
+                    map.put("quantity", "Количество : " + dataSnapshot1.child("quantity").getValue());
+                    arrayList.add(map);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return arrayList;
+    }
+
+    private ArrayList<HashMap<String, String>> getOrder(int position){
+        ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Orders").child(timeStampYear)
+                .child(timeStampMonth).child(timeStampDay).child(productList.get(position).getId()).child("items");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                HashMap<String, String> map;
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    map = new HashMap<>();
+                    map.put("name", "" + dataSnapshot1.child("name").getValue());
+                    map.put("quantity", "Количество : " + dataSnapshot1.child("quantity").getValue());
+                    map.put("price", "Цена препарата : " + dataSnapshot1.child("price").getValue());
+                    arrayList.add(map);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return arrayList;
+    }
+
+    private void getOrderText(int position){
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Orders").child(timeStampYear)
+                .child(timeStampMonth).child(timeStampDay).child(productList.get(position).getId());
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 orderTypeText = "" + dataSnapshot.child("type").getValue();
+                 orderPriceText = "" + dataSnapshot.child("final_price").getValue();
+                 commentDialog(position,  false);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }
 

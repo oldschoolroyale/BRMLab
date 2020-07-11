@@ -70,7 +70,7 @@ public class UpdateActivityCheck extends AppCompatActivity implements UpdateHelp
                                 .check();
                     }
                 },
-                5000);
+                2000);
     }
     @Override
     public void OnUpdateCheckListener(String urlApp, String updateText, boolean check) {

@@ -3,12 +3,12 @@ package com.brm.uz.models;
 public class PharmacyNewOrdersPOJO {
     String name, id, parent;
     int quantity, stock;
-    double full, half, semi;
+    double full, half, semi, price, fullPrice;
 
     public PharmacyNewOrdersPOJO() {
     }
 
-    public PharmacyNewOrdersPOJO(String name, String id, String parent, int quantity, int stock, double full, double half, double semi) {
+    public PharmacyNewOrdersPOJO(String name, String id, String parent, int quantity, int stock, double full, double half, double semi, double price, double fullPrice) {
         this.name = name;
         this.id = id;
         this.parent = parent;
@@ -17,6 +17,8 @@ public class PharmacyNewOrdersPOJO {
         this.full = full;
         this.half = half;
         this.semi = semi;
+        this.price = price;
+        this.fullPrice = fullPrice;
     }
 
     public String getName() {
@@ -81,5 +83,21 @@ public class PharmacyNewOrdersPOJO {
 
     public void setSemi(double semi) {
         this.semi = semi;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getFullPrice() {
+        return fullPrice;
+    }
+
+    public void setFullPrice(double fullPrice) {
+        this.fullPrice = fullPrice;
     }
 }
